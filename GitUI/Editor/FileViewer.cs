@@ -22,7 +22,7 @@ namespace GitUI.Editor
     {
         private readonly AsyncLoader _async;
         private int _currentScrollPos = -1;
-        private bool _currentViewIsPatch;
+        private bool _currentViewIsDiff;
         private readonly IFileViewer _internalFileViewer;
 
         public FileViewer()
@@ -175,6 +175,8 @@ namespace GitUI.Editor
         {
             Hotkeys = HotkeySettingsManager.LoadHotkeys(HotkeySettingsName);
             Font = AppSettings.DiffFont;
+
+            InitializeDiffPresentationToggles();
         }
 
         void InitializeDiffPresentationToggles()
@@ -294,7 +296,7 @@ namespace GitUI.Editor
 
         public void SetVisibilityOfDiffContextMenu(bool visible, bool isStagingDiff)
         {
-            _currentViewIsPatch = visible;
+            _currentViewIsDiff = visible;
             ignoreWhitespaceChangesToolStripMenuItem.Visible = visible;
             increaseNumberOfLinesToolStripMenuItem.Visible = visible;
             descreaseNumberOfLinesToolStripMenuItem.Visible = visible;
@@ -333,7 +335,7 @@ namespace GitUI.Editor
 
         private void TextAreaMouseMove(object sender, MouseEventArgs e)
         {
-            if (_currentViewIsPatch && !fileviewerToolbar.Visible)
+            if (_currentViewIsDiff && !fileviewerToolbar.Visible)
             {
                 fileviewerToolbar.Visible = true;
                 fileviewerToolbar.Location = new Point(this.Width - fileviewerToolbar.Width - 40, 0);
@@ -674,12 +676,13 @@ namespace GitUI.Editor
         private void IgnoreWhitespaceChangesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             IgnoreWhitespaceChanges = !IgnoreWhitespaceChanges;
-            AppSettings.IgnoreWhitespaceChangesInDiffViewer = IgnoreWhitespaceChanges;
-
             ignoreWhitespaceChangesButton.Checked = IgnoreWhitespaceChanges;
             ignoreWhitespaceChangesToolStripMenuItem.Checked = IgnoreWhitespaceChanges;
 
-            OnExtraDiffArgumentsChanged();
+            if (_currentViewIsDiff)
+                AppSettings.IgnoreWhitespaceChangesInDiffViewer = IgnoreWhitespaceChanges;
+
+            OnExtraDiffArgumentsChanged(); 
         }
 
         private void IncreaseNumberOfLinesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -699,11 +702,12 @@ namespace GitUI.Editor
 
         private void ShowEntireFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ShowEntireFile = !ShowEntireFile;
-            AppSettings.ShowEntireFileInDiffViewer = ShowEntireFile;
-
+            ShowEntireFile = !ShowEntireFile; 
             showEntireFileToolStripMenuItem.Checked = ShowEntireFile;
             showEntireFileButton.Checked = ShowEntireFile;
+
+            if (_currentViewIsDiff)
+                AppSettings.ShowEntireFileInDiffViewer = ShowEntireFile;
 
             OnExtraDiffArgumentsChanged();
         }
@@ -721,7 +725,7 @@ namespace GitUI.Editor
             if (string.IsNullOrEmpty(code))
                 return;
 
-            if (_currentViewIsPatch)
+            if (_currentViewIsDiff)
             {
                 //add artificail space if selected text is not starting from line begining, it will be removed later
                 int pos = _internalFileViewer.GetSelectionPosition();
@@ -884,12 +888,13 @@ namespace GitUI.Editor
         private void ShowNonPrintableCharactersToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowNonPrintableCharacters = !ShowNonPrintableCharacters;
-            AppSettings.ShowNonPrintableCharactersInDiffViewer = ShowNonPrintableCharacters;
-
             showNonPrintableCharactersToolStripMenuItem.Checked = ShowNonPrintableCharacters;
             showNonPrintableCharactersButton.Checked = ShowNonPrintableCharacters;
 
-            _internalFileViewer.ShowAllNonPrintableCharacters(ShowNonPrintableCharacters);
+            if (_currentViewIsDiff)
+                AppSettings.ShowNonPrintableCharactersInDiffViewer = ShowNonPrintableCharacters; 
+
+            _internalFileViewer.ShowAllNonPrintableCharacters(ShowNonPrintableCharacters); 
         }
 
         private void FindToolStripMenuItemClick(object sender, EventArgs e)
@@ -1006,7 +1011,7 @@ namespace GitUI.Editor
                 noSelection = true;
             }
 
-            if (_currentViewIsPatch)
+            if (_currentViewIsDiff)
             {
                 //add artificail space if selected text is not starting from line begining, it will be removed later
                 int pos = noSelection ? 0 : _internalFileViewer.GetSelectionPosition();
