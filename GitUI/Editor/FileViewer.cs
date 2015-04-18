@@ -28,7 +28,6 @@ namespace GitUI.Editor
         public FileViewer()
         {
             TreatAllFilesAsText = false;
-            ShowEntireFile = false;
             NumberOfVisibleLines = 3;
             InitializeComponent();
             Translate();
@@ -177,14 +176,19 @@ namespace GitUI.Editor
             Hotkeys = HotkeySettingsManager.LoadHotkeys(HotkeySettingsName);
             Font = AppSettings.DiffFont;
 
+            // TODO Methodize & share with Event Handlers
             IgnoreWhitespaceChanges = AppSettings.IgnoreWhitespaceChangesInFileViewer;
-            // TODO Methodize
             ignoreWhitespaceChangesButton.Checked = IgnoreWhitespaceChanges;
             ignoreWhitespaceChangesToolStripMenuItem.Checked = IgnoreWhitespaceChanges;
 
             ShowNonPrintableCharacters = AppSettings.ShowNonPrintableCharactersInFileViewer;
             showNonPrintableCharactersButton.Checked = ShowNonPrintableCharacters;
             showNonPrintableCharactersToolStripMenuItem.Checked = ShowNonPrintableCharacters;
+            _internalFileViewer.ShowAllNonPrintableCharacters(ShowNonPrintableCharacters);
+
+            ShowEntireFile = AppSettings.ShowEntireFileInFileViewer;
+            showEntireFileButton.Checked = ShowEntireFile;
+            showEntireFileToolStripMenuItem.Checked = ShowEntireFile;
         }
 
         void ContextMenu_Opening(object sender, CancelEventArgs e)
@@ -641,6 +645,8 @@ namespace GitUI.Editor
 
         private void Reset(bool diff, bool text, bool staging_diff)
         {
+            // TODO REINIT PROPS & CHECKS
+
             patchHighlighting = diff;
             SetVisibilityDiffContextMenu(diff, staging_diff);
             ClearImage();
@@ -685,10 +691,12 @@ namespace GitUI.Editor
 
         private void ShowEntireFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            showEntireFileToolStripMenuItem.Checked = !showEntireFileToolStripMenuItem.Checked;
-            showEntireFileButton.Checked = showEntireFileToolStripMenuItem.Checked;
+            ShowEntireFile = !ShowEntireFile;
+            AppSettings.ShowEntireFileInFileViewer = ShowEntireFile;
 
-            ShowEntireFile = showEntireFileToolStripMenuItem.Checked;
+            showEntireFileToolStripMenuItem.Checked = ShowEntireFile;
+            showEntireFileButton.Checked = ShowEntireFile;
+
             OnExtraDiffArgumentsChanged();
         }
 
@@ -847,17 +855,17 @@ namespace GitUI.Editor
 
         private void IncreaseNumberOfLinesClick(object sender, EventArgs e)
         {
-            IncreaseNumberOfLinesToolStripMenuItem_Click(null, null);
+            IncreaseNumberOfLinesToolStripMenuItem_Click(sender, e);
         }
 
         private void DecreaseNumberOfLinesClick(object sender, EventArgs e)
         {
-            DescreaseNumberOfLinesToolStripMenuItem_Click(null, null);
+            DescreaseNumberOfLinesToolStripMenuItem_Click(sender, e);
         }
 
-        private void ShowEntireFileButtonClick(object sender, EventArgs e)
+        private void ShowEntireFileButton_Click(object sender, EventArgs e)
         {
-            ShowEntireFileToolStripMenuItem_Click(null, null);
+            ShowEntireFileToolStripMenuItem_Click(sender, e);
         }
 
         private void ShowNonPrintableCharactersButton_Click(object sender, EventArgs e)

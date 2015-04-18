@@ -1131,6 +1131,12 @@ namespace GitCommands
             set { SetBool("ShowNonPrintableCharactersInFileViewer", value); }
         }
 
+        public static bool ShowEntireFileInFileViewer
+        {
+            get { return GetBool("ShowEntireFileInFileViewer", false); }
+            set { SetBool("ShowEntireFileInFileViewer", value); }
+        }
+
         public static string GetGitExtensionsFullPath()
         {
             return Application.ExecutablePath;

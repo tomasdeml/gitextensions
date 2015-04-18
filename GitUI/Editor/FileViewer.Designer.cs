@@ -271,7 +271,7 @@
             this.showEntireFileButton.Name = "showEntireFileButton";
             this.showEntireFileButton.Size = new System.Drawing.Size(23, 20);
             this.showEntireFileButton.ToolTipText = "Show entire file";
-            this.showEntireFileButton.Click += new System.EventHandler(this.ShowEntireFileButtonClick);
+            this.showEntireFileButton.Click += new System.EventHandler(this.ShowEntireFileButton_Click);
             // 
             // showNonPrintableCharactersButton
             // 
