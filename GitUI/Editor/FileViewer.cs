@@ -58,7 +58,7 @@ namespace GitUI.Editor
                         TextLoaded(this, null);
                 };
 
-            IgnoreWhitespaceChanges = false;
+            IgnoreWhitespaceChanges = true;
 
             IsReadOnly = true;
 

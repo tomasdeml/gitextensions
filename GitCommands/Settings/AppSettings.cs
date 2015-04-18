@@ -789,14 +789,6 @@ namespace GitCommands
             {
                 var temp = value.EnsureTrailingPathSeparator();
                 SetString("gitbindir", temp);
-
-                //if (string.IsNullOrEmpty(_gitBinDir))
-                //    return;
-
-                //var path =
-                //    Environment.GetEnvironmentVariable("path", EnvironmentVariableTarget.Process) + ";" +
-                //    _gitBinDir;
-                //Environment.SetEnvironmentVariable("path", path, EnvironmentVariableTarget.Process);
             }
         }
 
@@ -1126,6 +1118,12 @@ namespace GitCommands
             set { SetBool("CheckForReleaseCandidates", value); }
         }
 
+        public static bool IgnoreWhitespaceChangesInFileViewer
+        {
+            get { return GetBool("IgnoreWhitespaceChangesInFileViewer", false); }
+            set { SetBool("IgnoreWhitespaceChangesInFileViewer", value); }
+        }
+
         public static string GetGitExtensionsFullPath()
         {
             return Application.ExecutablePath;
@@ -1278,47 +1276,5 @@ namespace GitCommands
             return SettingsContainer.GetString(name, defaultValue);
         }
 
-    }
-
-    /*
-    public abstract class Setting<T> : IXmlSerializable
-    {
-        public SettingsContainer SettingsSource { get; private set; }
-        private T _Value;
-        public bool HasValue { get; private set; }
-        public string Name { get; private set; }
-        public T DefaultValue { get; private set; }
-
-        public Setting(SettingsContainer aSettingsSource, string aName, T aDefaultValue)
-        {
-            SettingsSource = aSettingsSource;
-            Name = aName;
-            DefaultValue = aDefaultValue;
-            HasValue = false;
-        }
-
-        public T Value
-        {
-            get
-            {
-                return SettingsSource.GetValue(Name, DefaultValue, (s) => DefaultValue);
-            }
-
-            set
-            {
-                //SettingsSource.SetValue(this, value);
-            }
-        }
-
-        public virtual System.Xml.Schema.XmlSchema GetSchema()
-        {
-            return null;
-        }
-
-        public abstract void ReadXml(XmlReader reader);
-        public abstract void WriteXml(XmlWriter writer);
-    }
-
-    */
-
+    } 
 }
