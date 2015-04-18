@@ -1125,6 +1125,12 @@ namespace GitCommands
             set { SetBool("IgnoreWhitespaceChangesInFileViewer", value); }
         }
 
+        public static bool ShowNonPrintableCharactersInFileViewer
+        {
+            get { return GetBool("ShowNonPrintableCharactersInFileViewer", false); }
+            set { SetBool("ShowNonPrintableCharactersInFileViewer", value); }
+        }
+
         public static string GetGitExtensionsFullPath()
         {
             return Application.ExecutablePath;

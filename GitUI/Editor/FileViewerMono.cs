@@ -377,6 +377,13 @@ namespace GitUI.Editor
             // todo
         }
 
+        public void ShowAllNonPrintableCharacters(bool show)
+        { 
+            ShowEOLMarkers = show;
+            ShowSpaces = show;
+            ShowTabs = show; 
+        }
+
         #endregion
     }
 }

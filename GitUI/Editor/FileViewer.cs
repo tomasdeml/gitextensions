@@ -56,12 +56,7 @@ namespace GitUI.Editor
                     _internalFileViewer.SetText("Unsupported file: \n\n" + args.Exception.Message);
                     if (TextLoaded != null)
                         TextLoaded(this, null);
-                };
-
-            IgnoreWhitespaceChanges = AppSettings.IgnoreWhitespaceChangesInFileViewer;
-            // TODO Methodize
-            ignoreWhitespaceChangesButton.Checked = IgnoreWhitespaceChanges;
-            ignoreWhitespaceChangesToolStripMenuItem.Checked = IgnoreWhitespaceChanges;
+                }; 
 
             IsReadOnly = true;
 
@@ -112,15 +107,22 @@ namespace GitUI.Editor
         [Description("Ignore changes in amount of whitespace. This ignores whitespace at line end, and considers all other sequences of one or more whitespace characters to be equivalent.")]
         [DefaultValue(false)]
         public bool IgnoreWhitespaceChanges { get; set; }
+
+        [DefaultValue(false)]
+        public bool ShowNonPrintableCharacters { get; set; }
+
         [Description("Show diffs with <n> lines of context.")]
         [DefaultValue(3)]
         public int NumberOfVisibleLines { get; set; }
+
         [Description("Show diffs with entire file.")]
         [DefaultValue(false)]
         public bool ShowEntireFile { get; set; }
+        
         [Description("Treat all files as text.")]
         [DefaultValue(false)]
         public bool TreatAllFilesAsText { get; set; }
+
         [DefaultValue(true)]
         [Category("Behavior")]
         public bool IsReadOnly
@@ -128,6 +130,7 @@ namespace GitUI.Editor
             get { return _internalFileViewer.IsReadOnly; }
             set { _internalFileViewer.IsReadOnly = value; }
         }
+
         [DefaultValue(true)]
         [Description("If true line numbers are shown in the textarea")]
         [Category("Appearance")]
@@ -167,16 +170,24 @@ namespace GitUI.Editor
         private void WorkingDirChanged(IGitUICommandsSource source, GitUICommands old)
         {
             this.Encoding = null;
-        }
-
+        } 
 
         protected override void OnRuntimeLoad(EventArgs e)
         {
-            this.Hotkeys = HotkeySettingsManager.LoadHotkeys(HotkeySettingsName);
+            Hotkeys = HotkeySettingsManager.LoadHotkeys(HotkeySettingsName);
             Font = AppSettings.DiffFont;
+
+            IgnoreWhitespaceChanges = AppSettings.IgnoreWhitespaceChangesInFileViewer;
+            // TODO Methodize
+            ignoreWhitespaceChangesButton.Checked = IgnoreWhitespaceChanges;
+            ignoreWhitespaceChangesToolStripMenuItem.Checked = IgnoreWhitespaceChanges;
+
+            ShowNonPrintableCharacters = AppSettings.ShowNonPrintableCharactersInFileViewer;
+            showNonPrintableCharactersButton.Checked = ShowNonPrintableCharacters;
+            showNonPrintableCharactersToolStripMenuItem.Checked = ShowNonPrintableCharacters;
         }
 
-        void ContextMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        void ContextMenu_Opening(object sender, CancelEventArgs e)
         {
             copyToolStripMenuItem.Enabled = (_internalFileViewer.GetSelectionLength() > 0);
             if (ContextMenuOpening != null)
@@ -856,12 +867,13 @@ namespace GitUI.Editor
 
         private void ShowNonPrintableCharactersToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            showNonPrintableCharactersToolStripMenuItem.Checked = !showNonPrintableCharactersToolStripMenuItem.Checked;
-            showNonPrintableCharactersButton.Checked = showNonPrintableCharactersToolStripMenuItem.Checked;
+            ShowNonPrintableCharacters = !ShowNonPrintableCharacters;
+            AppSettings.ShowNonPrintableCharactersInFileViewer = ShowNonPrintableCharacters;
 
-            _internalFileViewer.ShowEOLMarkers = showNonPrintableCharactersToolStripMenuItem.Checked;
-            _internalFileViewer.ShowSpaces = showNonPrintableCharactersToolStripMenuItem.Checked;
-            _internalFileViewer.ShowTabs = showNonPrintableCharactersToolStripMenuItem.Checked;
+            showNonPrintableCharactersToolStripMenuItem.Checked = ShowNonPrintableCharacters;
+            showNonPrintableCharactersButton.Checked = ShowNonPrintableCharacters;
+
+            _internalFileViewer.ShowAllNonPrintableCharacters(ShowNonPrintableCharacters);
         }
 
         private void FindToolStripMenuItemClick(object sender, EventArgs e)

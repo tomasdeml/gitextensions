@@ -51,5 +51,7 @@ namespace GitUI.Editor
         void FocusTextArea();
 
         void SetFileLoader(Func<bool, Tuple<int, string>> fileLoader);
+
+        void ShowAllNonPrintableCharacters(bool show);
     }
 }

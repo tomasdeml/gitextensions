@@ -492,6 +492,12 @@ namespace GitUI.Editor
             _findAndReplaceForm.SetFileLoader(fileLoader);
         }
 
+        public void ShowAllNonPrintableCharacters(bool show)
+        { 
+            ShowEOLMarkers = show;
+            ShowSpaces = show;
+            ShowTabs = show;         }
+
         #endregion
     }
 }
