@@ -1118,6 +1118,7 @@ namespace GitCommands
             set { SetBool("CheckForReleaseCandidates", value); }
         }
 
+        // TODO Move out
         public static bool IgnoreWhitespaceChangesInFileViewer
         {
             get { return GetBool("IgnoreWhitespaceChangesInFileViewer", false); }

@@ -58,7 +58,8 @@ namespace GitUI.Editor
                         TextLoaded(this, null);
                 };
 
-            IgnoreWhitespaceChanges = true;
+            IgnoreWhitespaceChanges = AppSettings.IgnoreWhitespaceChangesInFileViewer;
+            IgnoreWhitespaceChangesButton_Click();
 
             IsReadOnly = true;
 
@@ -643,21 +644,24 @@ namespace GitUI.Editor
             PictureBox.Image = null;
         }
 
-        private void IgnoreWhitespaceChangesToolStripMenuItemClick(object sender, EventArgs e)
+        private void IgnoreWhitespaceChangesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             IgnoreWhitespaceChanges = !IgnoreWhitespaceChanges;
-            ignoreWhiteSpaces.Checked = IgnoreWhitespaceChanges;
+            AppSettings.IgnoreWhitespaceChangesInFileViewer = IgnoreWhitespaceChanges;
+
+            ignoreWhitespaceChangesButton.Checked = IgnoreWhitespaceChanges;
             ignoreWhitespaceChangesToolStripMenuItem.Checked = IgnoreWhitespaceChanges;
+
             OnExtraDiffArgumentsChanged();
         }
 
-        private void IncreaseNumberOfLinesToolStripMenuItemClick(object sender, EventArgs e)
+        private void IncreaseNumberOfLinesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             NumberOfVisibleLines++;
             OnExtraDiffArgumentsChanged();
         }
 
-        private void DescreaseNumberOfLinesToolStripMenuItemClick(object sender, EventArgs e)
+        private void DescreaseNumberOfLinesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (NumberOfVisibleLines > 0)
                 NumberOfVisibleLines--;
@@ -666,7 +670,7 @@ namespace GitUI.Editor
             OnExtraDiffArgumentsChanged();
         }
 
-        private void ShowEntireFileToolStripMenuItemClick(object sender, EventArgs e)
+        private void ShowEntireFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             showEntireFileToolStripMenuItem.Checked = !showEntireFileToolStripMenuItem.Checked;
             showEntireFileButton.Checked = showEntireFileToolStripMenuItem.Checked;
@@ -675,14 +679,14 @@ namespace GitUI.Editor
             OnExtraDiffArgumentsChanged();
         }
 
-        private void TreatAllFilesAsTextToolStripMenuItemClick(object sender, EventArgs e)
+        private void TreatAllFilesAsTextToolStripMenuItem_Click(object sender, EventArgs e)
         {
             treatAllFilesAsTextToolStripMenuItem.Checked = !treatAllFilesAsTextToolStripMenuItem.Checked;
             TreatAllFilesAsText = treatAllFilesAsTextToolStripMenuItem.Checked;
             OnExtraDiffArgumentsChanged();
         }
 
-        private void CopyToolStripMenuItemClick(object sender, EventArgs e)
+        private void CopyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string code = _internalFileViewer.GetSelectedText();
             if (string.IsNullOrEmpty(code))
@@ -711,7 +715,7 @@ namespace GitUI.Editor
             Clipboard.SetText(DoAutoCRLF(code));
         }
 
-        private void CopyPatchToolStripMenuItemClick(object sender, EventArgs e)
+        private void CopyPatchToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var selectedText = _internalFileViewer.GetSelectedText();
             if (!string.IsNullOrEmpty(selectedText))
@@ -830,17 +834,17 @@ namespace GitUI.Editor
 
         private void IncreaseNumberOfLinesClick(object sender, EventArgs e)
         {
-            IncreaseNumberOfLinesToolStripMenuItemClick(null, null);
+            IncreaseNumberOfLinesToolStripMenuItem_Click(null, null);
         }
 
         private void DecreaseNumberOfLinesClick(object sender, EventArgs e)
         {
-            DescreaseNumberOfLinesToolStripMenuItemClick(null, null);
+            DescreaseNumberOfLinesToolStripMenuItem_Click(null, null);
         }
 
         private void ShowEntireFileButtonClick(object sender, EventArgs e)
         {
-            ShowEntireFileToolStripMenuItemClick(null, null);
+            ShowEntireFileToolStripMenuItem_Click(null, null);
         }
 
         private void ShowNonPrintCharsClick(object sender, EventArgs e)
@@ -863,9 +867,9 @@ namespace GitUI.Editor
             _internalFileViewer.Find();
         }
 
-        private void ignoreWhiteSpaces_Click(object sender, EventArgs e)
+        private void IgnoreWhitespaceChangesButton_Click(object sender, EventArgs e)
         {
-            IgnoreWhitespaceChangesToolStripMenuItemClick(null, null);
+            IgnoreWhitespaceChangesToolStripMenuItem_Click(sender, e);
         }
 
         #region Hotkey commands
@@ -892,10 +896,10 @@ namespace GitUI.Editor
             {
                 case Commands.Find: this.FindToolStripMenuItemClick(null, null); break;
                 case Commands.GoToLine: this.goToLineToolStripMenuItem_Click(null, null); break;
-                case Commands.IncreaseNumberOfVisibleLines: this.IncreaseNumberOfLinesToolStripMenuItemClick(null, null); break;
-                case Commands.DecreaseNumberOfVisibleLines: this.DescreaseNumberOfLinesToolStripMenuItemClick(null, null); break;
-                case Commands.ShowEntireFile: this.ShowEntireFileToolStripMenuItemClick(null, null); break;
-                case Commands.TreatFileAsText: this.TreatAllFilesAsTextToolStripMenuItemClick(null, null); break;
+                case Commands.IncreaseNumberOfVisibleLines: this.IncreaseNumberOfLinesToolStripMenuItem_Click(null, null); break;
+                case Commands.DecreaseNumberOfVisibleLines: this.DescreaseNumberOfLinesToolStripMenuItem_Click(null, null); break;
+                case Commands.ShowEntireFile: this.ShowEntireFileToolStripMenuItem_Click(null, null); break;
+                case Commands.TreatFileAsText: this.TreatAllFilesAsTextToolStripMenuItem_Click(null, null); break;
                 case Commands.NextChange: this.NextChangeButtonClick(null, null); break;
                 case Commands.PreviousChange: this.PreviousChangeButtonClick(null, null); break;
                 default: return base.ExecuteCommand(cmd);
