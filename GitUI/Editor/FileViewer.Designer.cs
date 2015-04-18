@@ -45,7 +45,7 @@
             this.showEntireFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.treatAllFilesAsTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.showNonprintableCharactersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showNonPrintableCharactersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.goToLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fileviewerToolbar = new GitUI.ToolStripEx();
             this.nextChangeButton = new System.Windows.Forms.ToolStripButton();
@@ -55,7 +55,7 @@
             this.DecreaseNumberOfLines = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.showEntireFileButton = new System.Windows.Forms.ToolStripButton();
-            this.showNonPrintChars = new System.Windows.Forms.ToolStripButton();
+            this.showNonPrintableCharactersButton = new System.Windows.Forms.ToolStripButton();
             this.ignoreWhitespaceChangesButton = new System.Windows.Forms.ToolStripButton();
             this.encodingToolStripComboBox = new System.Windows.Forms.ToolStripComboBox();
             this.PictureBox = new System.Windows.Forms.PictureBox();
@@ -80,7 +80,7 @@
             this.showEntireFileToolStripMenuItem,
             this.toolStripSeparator2,
             this.treatAllFilesAsTextToolStripMenuItem,
-            this.showNonprintableCharactersToolStripMenuItem,
+            this.showNonPrintableCharactersToolStripMenuItem,
             this.goToLineToolStripMenuItem});
             this.contextMenu.Name = "ContextMenu";
             this.contextMenu.Size = new System.Drawing.Size(244, 324);
@@ -175,12 +175,12 @@
             this.treatAllFilesAsTextToolStripMenuItem.Text = "Treat all files as text";
             this.treatAllFilesAsTextToolStripMenuItem.Click += new System.EventHandler(this.TreatAllFilesAsTextToolStripMenuItem_Click);
             // 
-            // showNonprintableCharactersToolStripMenuItem
+            // showNonPrintableCharactersToolStripMenuItem
             // 
-            this.showNonprintableCharactersToolStripMenuItem.Name = "showNonprintableCharactersToolStripMenuItem";
-            this.showNonprintableCharactersToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
-            this.showNonprintableCharactersToolStripMenuItem.Text = "Show nonprinting characters";
-            this.showNonprintableCharactersToolStripMenuItem.Click += new System.EventHandler(this.ShowNonprintableCharactersToolStripMenuItemClick);
+            this.showNonPrintableCharactersToolStripMenuItem.Name = "showNonPrintableCharactersToolStripMenuItem";
+            this.showNonPrintableCharactersToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
+            this.showNonPrintableCharactersToolStripMenuItem.Text = "Show nonprinting characters";
+            this.showNonPrintableCharactersToolStripMenuItem.Click += new System.EventHandler(this.ShowNonPrintableCharactersToolStripMenuItem_Click);
             // 
             // goToLineToolStripMenuItem
             // 
@@ -202,7 +202,7 @@
             this.DecreaseNumberOfLines,
             this.toolStripSeparator4,
             this.showEntireFileButton,
-            this.showNonPrintChars,
+            this.showNonPrintableCharactersButton,
             this.ignoreWhitespaceChangesButton,
             this.encodingToolStripComboBox});
             this.fileviewerToolbar.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
@@ -273,15 +273,15 @@
             this.showEntireFileButton.ToolTipText = "Show entire file";
             this.showEntireFileButton.Click += new System.EventHandler(this.ShowEntireFileButtonClick);
             // 
-            // showNonPrintChars
+            // showNonPrintableCharactersButton
             // 
-            this.showNonPrintChars.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.showNonPrintChars.Image = global::GitUI.Properties.Resources.nonprintchar;
-            this.showNonPrintChars.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.showNonPrintChars.Name = "showNonPrintChars";
-            this.showNonPrintChars.Size = new System.Drawing.Size(23, 20);
-            this.showNonPrintChars.ToolTipText = "Show nonprinting characters";
-            this.showNonPrintChars.Click += new System.EventHandler(this.ShowNonPrintCharsClick);
+            this.showNonPrintableCharactersButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.showNonPrintableCharactersButton.Image = global::GitUI.Properties.Resources.nonprintchar;
+            this.showNonPrintableCharactersButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.showNonPrintableCharactersButton.Name = "showNonPrintableCharactersButton";
+            this.showNonPrintableCharactersButton.Size = new System.Drawing.Size(23, 20);
+            this.showNonPrintableCharactersButton.ToolTipText = "Show nonprinting characters";
+            this.showNonPrintableCharactersButton.Click += new System.EventHandler(this.ShowNonPrintableCharactersButton_Click);
             // 
             // ignoreWhitespaceChangesButton
             // 
@@ -351,8 +351,8 @@
         private System.Windows.Forms.ToolStripButton DecreaseNumberOfLines;
         private System.Windows.Forms.ToolStripButton showEntireFileButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripButton showNonPrintChars;
-        private System.Windows.Forms.ToolStripMenuItem showNonprintableCharactersToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton showNonPrintableCharactersButton;
+        private System.Windows.Forms.ToolStripMenuItem showNonPrintableCharactersToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton ignoreWhitespaceChangesButton;
         private System.Windows.Forms.PictureBox PictureBox;
         private System.Windows.Forms.ToolStripComboBox encodingToolStripComboBox;

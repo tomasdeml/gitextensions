@@ -849,19 +849,19 @@ namespace GitUI.Editor
             ShowEntireFileToolStripMenuItem_Click(null, null);
         }
 
-        private void ShowNonPrintCharsClick(object sender, EventArgs e)
+        private void ShowNonPrintableCharactersButton_Click(object sender, EventArgs e)
         {
-            ShowNonprintableCharactersToolStripMenuItemClick(null, null);
+            ShowNonPrintableCharactersToolStripMenuItem_Click(sender, e);
         }
 
-        private void ShowNonprintableCharactersToolStripMenuItemClick(object sender, EventArgs e)
+        private void ShowNonPrintableCharactersToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            showNonprintableCharactersToolStripMenuItem.Checked = !showNonprintableCharactersToolStripMenuItem.Checked;
-            showNonPrintChars.Checked = showNonprintableCharactersToolStripMenuItem.Checked;
+            showNonPrintableCharactersToolStripMenuItem.Checked = !showNonPrintableCharactersToolStripMenuItem.Checked;
+            showNonPrintableCharactersButton.Checked = showNonPrintableCharactersToolStripMenuItem.Checked;
 
-            _internalFileViewer.ShowEOLMarkers = showNonprintableCharactersToolStripMenuItem.Checked;
-            _internalFileViewer.ShowSpaces = showNonprintableCharactersToolStripMenuItem.Checked;
-            _internalFileViewer.ShowTabs = showNonprintableCharactersToolStripMenuItem.Checked;
+            _internalFileViewer.ShowEOLMarkers = showNonPrintableCharactersToolStripMenuItem.Checked;
+            _internalFileViewer.ShowSpaces = showNonPrintableCharactersToolStripMenuItem.Checked;
+            _internalFileViewer.ShowTabs = showNonPrintableCharactersToolStripMenuItem.Checked;
         }
 
         private void FindToolStripMenuItemClick(object sender, EventArgs e)
