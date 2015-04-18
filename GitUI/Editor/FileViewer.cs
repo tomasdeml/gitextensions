@@ -59,7 +59,9 @@ namespace GitUI.Editor
                 };
 
             IgnoreWhitespaceChanges = AppSettings.IgnoreWhitespaceChangesInFileViewer;
-            IgnoreWhitespaceChangesButton_Click();
+            // TODO Methodize
+            ignoreWhitespaceChangesButton.Checked = IgnoreWhitespaceChanges;
+            ignoreWhitespaceChangesToolStripMenuItem.Checked = IgnoreWhitespaceChanges;
 
             IsReadOnly = true;
 
