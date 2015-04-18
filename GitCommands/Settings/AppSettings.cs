@@ -1119,22 +1119,22 @@ namespace GitCommands
         }
 
         // TODO Move out
-        public static bool IgnoreWhitespaceChangesInFileViewer
+        public static bool IgnoreWhitespaceChangesInDiffViewer
         {
-            get { return GetBool("IgnoreWhitespaceChangesInFileViewer", false); }
-            set { SetBool("IgnoreWhitespaceChangesInFileViewer", value); }
+            get { return GetBool("IgnoreWhitespaceChangesInDiffViewer", false); }
+            set { SetBool("IgnoreWhitespaceChangesInDiffViewer", value); }
         }
 
-        public static bool ShowNonPrintableCharactersInFileViewer
+        public static bool ShowNonPrintableCharactersInDiffViewer
         {
-            get { return GetBool("ShowNonPrintableCharactersInFileViewer", false); }
-            set { SetBool("ShowNonPrintableCharactersInFileViewer", value); }
+            get { return GetBool("ShowNonPrintableCharactersInDiffViewer", false); }
+            set { SetBool("ShowNonPrintableCharactersInDiffViewer", value); }
         }
 
-        public static bool ShowEntireFileInFileViewer
+        public static bool ShowEntireFileInDiffViewer
         {
-            get { return GetBool("ShowEntireFileInFileViewer", false); }
-            set { SetBool("ShowEntireFileInFileViewer", value); }
+            get { return GetBool("ShowEntireFileInDiffViewer", false); }
+            set { SetBool("ShowEntireFileInDiffViewer", value); }
         }
 
         public static string GetGitExtensionsFullPath()

@@ -175,18 +175,21 @@ namespace GitUI.Editor
         {
             Hotkeys = HotkeySettingsManager.LoadHotkeys(HotkeySettingsName);
             Font = AppSettings.DiffFont;
+        }
 
+        void InitializeDiffPresentationToggles()
+        {
             // TODO Methodize & share with Event Handlers
-            IgnoreWhitespaceChanges = AppSettings.IgnoreWhitespaceChangesInFileViewer;
+            IgnoreWhitespaceChanges = AppSettings.IgnoreWhitespaceChangesInDiffViewer;
             ignoreWhitespaceChangesButton.Checked = IgnoreWhitespaceChanges;
             ignoreWhitespaceChangesToolStripMenuItem.Checked = IgnoreWhitespaceChanges;
 
-            ShowNonPrintableCharacters = AppSettings.ShowNonPrintableCharactersInFileViewer;
+            ShowNonPrintableCharacters = AppSettings.ShowNonPrintableCharactersInDiffViewer;
             showNonPrintableCharactersButton.Checked = ShowNonPrintableCharacters;
             showNonPrintableCharactersToolStripMenuItem.Checked = ShowNonPrintableCharacters;
             _internalFileViewer.ShowAllNonPrintableCharacters(ShowNonPrintableCharacters);
 
-            ShowEntireFile = AppSettings.ShowEntireFileInFileViewer;
+            ShowEntireFile = AppSettings.ShowEntireFileInDiffViewer;
             showEntireFileButton.Checked = ShowEntireFile;
             showEntireFileToolStripMenuItem.Checked = ShowEntireFile;
         }
@@ -289,7 +292,7 @@ namespace GitUI.Editor
 
         public event EventHandler<EventArgs> ExtraDiffArgumentsChanged;
 
-        public void SetVisibilityDiffContextMenu(bool visible, bool isStaging_diff)
+        public void SetVisibilityOfDiffContextMenu(bool visible, bool isStagingDiff)
         {
             _currentViewIsPatch = visible;
             ignoreWhitespaceChangesToolStripMenuItem.Visible = visible;
@@ -300,7 +303,7 @@ namespace GitUI.Editor
             treatAllFilesAsTextToolStripMenuItem.Visible = visible;
             copyNewVersionToolStripMenuItem.Visible = visible;
             copyOldVersionToolStripMenuItem.Visible = visible;
-            cherrypickSelectedLinesToolStripMenuItem.Visible = visible && !isStaging_diff;
+            cherrypickSelectedLinesToolStripMenuItem.Visible = visible && !isStagingDiff;
             copyPatchToolStripMenuItem.Visible = visible;
         }
 
@@ -643,12 +646,17 @@ namespace GitUI.Editor
             Reset(diff, text, false);
         }
 
-        private void Reset(bool diff, bool text, bool staging_diff)
+        // TODO Enum
+        private void Reset(bool diff, bool text, bool stagingDiff)
         {
-            // TODO REINIT PROPS & CHECKS
-
             patchHighlighting = diff;
-            SetVisibilityDiffContextMenu(diff, staging_diff);
+
+            if (diff)
+            {
+                InitializeDiffPresentationToggles();
+            }
+            SetVisibilityOfDiffContextMenu(diff, stagingDiff);
+
             ClearImage();
             PictureBox.Visible = !text;
             _internalFileViewer.Visible = text;
@@ -666,7 +674,7 @@ namespace GitUI.Editor
         private void IgnoreWhitespaceChangesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             IgnoreWhitespaceChanges = !IgnoreWhitespaceChanges;
-            AppSettings.IgnoreWhitespaceChangesInFileViewer = IgnoreWhitespaceChanges;
+            AppSettings.IgnoreWhitespaceChangesInDiffViewer = IgnoreWhitespaceChanges;
 
             ignoreWhitespaceChangesButton.Checked = IgnoreWhitespaceChanges;
             ignoreWhitespaceChangesToolStripMenuItem.Checked = IgnoreWhitespaceChanges;
@@ -692,7 +700,7 @@ namespace GitUI.Editor
         private void ShowEntireFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowEntireFile = !ShowEntireFile;
-            AppSettings.ShowEntireFileInFileViewer = ShowEntireFile;
+            AppSettings.ShowEntireFileInDiffViewer = ShowEntireFile;
 
             showEntireFileToolStripMenuItem.Checked = ShowEntireFile;
             showEntireFileButton.Checked = ShowEntireFile;
@@ -876,7 +884,7 @@ namespace GitUI.Editor
         private void ShowNonPrintableCharactersToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowNonPrintableCharacters = !ShowNonPrintableCharacters;
-            AppSettings.ShowNonPrintableCharactersInFileViewer = ShowNonPrintableCharacters;
+            AppSettings.ShowNonPrintableCharactersInDiffViewer = ShowNonPrintableCharacters;
 
             showNonPrintableCharactersToolStripMenuItem.Checked = ShowNonPrintableCharacters;
             showNonPrintableCharactersButton.Checked = ShowNonPrintableCharacters;
