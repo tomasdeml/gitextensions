@@ -175,8 +175,6 @@ namespace GitUI.Editor
         {
             Hotkeys = HotkeySettingsManager.LoadHotkeys(HotkeySettingsName);
             Font = AppSettings.DiffFont;
-
-            InitializeDiffPresentationToggles();
         }
 
         void InitializeDiffPresentationToggles()
